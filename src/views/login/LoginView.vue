@@ -58,7 +58,7 @@ const autoLogin = () => {
   try {
     axios(config)
       .then((res) => {
-        router.push('/todolist')
+        router.push('/wordslist')
       })
       .catch((err) => {
         console.log(err.response)

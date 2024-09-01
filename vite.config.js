@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/todolist_composition_api/',
+  // base: '/memorize_words/',
   plugins: [vue()],
   resolve: {
     alias: {

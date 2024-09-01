@@ -5,6 +5,8 @@ import TodoList from '@/views/admin/TodoList.vue'
 import ListAll from '@/views/admin/pages/ListAll.vue'
 import ListUndone from '@/views/admin/pages/ListUndone.vue'
 import ListDone from '@/views/admin/pages/ListDone.vue'
+import WordsList from '@/views/admin/WordsList.vue'
+import QuizMode from '@/views/admin/QuizMode.vue'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -20,27 +22,37 @@ const router = createRouter({
       component: SigninView
     },
     {
-      path: '/todolist',
-      name: 'todolist',
-      component: TodoList,
-      children: [
-        {
-          path: '',
-          name: 'listall',
-          component: ListAll
-        },
-        {
-          path: 'undone',
-          name: 'undone',
-          component: ListUndone
-        },
-        {
-          path: 'done',
-          name: 'done',
-          component: ListDone
-        }
-      ]
+      path: '/wordslist',
+      name: 'wordslist',
+      component: WordsList
+    },
+    {
+      path: '/quizmode',
+      name: 'quizmode',
+      component: QuizMode
     }
+    // {
+    //   path: '/todolist',
+    //   name: 'todolist',
+    //   component: TodoList,
+    //   children: [
+    //     {
+    //       path: '',
+    //       name: 'listall',
+    //       component: ListAll
+    //     },
+    //     {
+    //       path: 'undone',
+    //       name: 'undone',
+    //       component: ListUndone
+    //     },
+    //     {
+    //       path: 'done',
+    //       name: 'done',
+    //       component: ListDone
+    //     }
+    //   ]
+    // }
   ]
 })
 
