@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // base: '/memorize_words/',
+  base: '/memorize_words/',
   plugins: [vue()],
   resolve: {
     alias: {
