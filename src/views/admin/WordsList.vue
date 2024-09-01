@@ -1,7 +1,7 @@
 <script setup>
 import { RouterView, RouterLink } from 'vue-router'
 import router from '@/router'
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 import { useFirebaseCrud } from '@/utils/firebaseCrud'
 const { updateData } = useFirebaseCrud()
@@ -128,6 +128,24 @@ const onReadData = () => {
 
     wordList.value = data?.[saveName]?.wordList || []
   })
+}
+
+const sortMode = ref('default') // 預設排序
+
+// 監聽排序模式改變時排序資料
+const sortedWordList = computed(() => {
+  if (sortMode.value === 'alphabet') {
+    return [...wordList.value].sort((a, b) => a.en.localeCompare(b.en))
+  } else if (sortMode.value === 'errorCount') {
+    return [...wordList.value].sort((a, b) => b.errCnt - a.errCnt)
+  } else {
+    return wordList.value
+  }
+})
+
+// 切換排序模式
+const changeSortMode = (mode) => {
+  sortMode.value = mode
 }
 
 const logout = () => {
@@ -277,7 +295,18 @@ onMounted(() => {
     <div class="container vhContainer">
       <div class="">
         <div class="mt-4">
-          <h4>單字列表</h4>
+          <div class="d-flex align-items-center mb-3">
+            <h4 class="me-3 my-0">單字列表</h4>
+            <button @click="changeSortMode('default')" class="btn btn-outline-secondary me-2">
+              預設排序
+            </button>
+            <button @click="changeSortMode('alphabet')" class="btn btn-outline-secondary me-2">
+              字母排序
+            </button>
+            <button @click="changeSortMode('errorCount')" class="btn btn-outline-secondary me-2">
+              錯誤次數排序
+            </button>
+          </div>
           <div>
             <div
               class="position-relative"
@@ -301,7 +330,7 @@ onMounted(() => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(word, index) in wordList" :key="index">
+                  <tr v-for="(word, index) in sortedWordList" :key="index">
                     <td>{{ (index += 1) }}</td>
                     <td>{{ word.en }}</td>
                     <td>{{ word.cn }}</td>
