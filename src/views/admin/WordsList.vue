@@ -191,12 +191,15 @@ onUnmounted(() => {
 <template>
   <!-- ToDo List -->
   <div id="todoListPage" class="bg-warning" :style="{ height: containerHeight }">
-    <nav class="d-flex flex-column flex-sm-row">
-      <h2 class="text-center">WordBox</h2>
-      <ul class="d-flex justify-content-end">
+    <nav
+      class="text-white d-flex flex-column flex-sm-row py-2 mb-3"
+      style="background: #3d3d3d !important"
+    >
+      <h2 class="text-center mt-1 mb-0">WordBox</h2>
+      <ul class="d-flex justify-content-end mb-1 mt-2">
         <li class="me-3">
           <RouterLink to="/">
-            <span>{{ name }} 的英文單字列表</span>
+            <span class="text-white">{{ name }} 的英文單字列表</span>
           </RouterLink>
         </li>
         <li @click="logout" style="cursor: pointer">
@@ -210,7 +213,9 @@ onUnmounted(() => {
         <RouterLink to="/quizmode">
           <button class="btn btn-primary me-2">Quiz Mode</button>
         </RouterLink>
-        <button @click="status = 'add'" class="btn btn-primary">新增</button>
+        <button @click="status = 'add'" class="btn btn-primary">
+          <font-awesome-icon icon="fa-solid fa-plus" />
+        </button>
       </div>
 
       <div
