@@ -174,7 +174,7 @@ onMounted(() => {
   <!-- ToDo List -->
   <div id="todoListPage" class="bg-warning">
     <nav class="d-flex flex-column flex-sm-row">
-      <h2 class="text-center">WordMate</h2>
+      <h2 class="text-center">WordBox 單字盒</h2>
       <ul class="d-flex justify-content-end">
         <li class="me-3">
           <RouterLink to="/">
