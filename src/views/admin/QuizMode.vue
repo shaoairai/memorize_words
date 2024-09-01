@@ -1,7 +1,7 @@
 <script setup>
 import { RouterView, RouterLink } from 'vue-router'
 import router from '@/router'
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 
 import { useFirebaseCrud } from '@/utils/firebaseCrud'
 const { updateData } = useFirebaseCrud()
@@ -68,10 +68,12 @@ const resetList = () => {
 }
 
 const knowWord = () => {
+  // 若全部完成則重設
   if (isListComplete.value) {
-    alert('已全部完成！')
+    resetList()
+  } else {
+    drawNextWord()
   }
-  drawNextWord()
 }
 
 const dontKnowWord = () => {
@@ -81,10 +83,12 @@ const dontKnowWord = () => {
     }
   })
   saveList()
+  // 若全部完成則重設
   if (isListComplete.value) {
-    alert('已全部完成！')
+    resetList()
+  } else {
+    drawNextWord()
   }
-  drawNextWord()
 }
 
 const toggleShowEnglish = () => {
@@ -142,10 +146,31 @@ onMounted(() => {
     router.push('/login')
   }
 })
+
+// 手機版
+const isMobile = ref(window.innerWidth < 992)
+const containerHeight = ref('100vh')
+
+const updateDimensions = () => {
+  isMobile.value = window.innerWidth < 992
+  containerHeight.value = `${window.innerHeight}px` // 直接設置高度
+}
+
+onMounted(() => {
+  window.addEventListener('resize', updateDimensions)
+  updateDimensions() // 初始化時調用，確保在組件掛載時立即檢查視窗大小
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateDimensions)
+})
 </script>
 
 <template>
-  <div class="bg-warning vh-100 d-flex flex-column align-items-center justify-content-between">
+  <div
+    class="bg-warning d-flex flex-column align-items-center justify-content-between"
+    :style="{ height: containerHeight }"
+  >
     <!-- 上半部分，顯示中文 -->
     <div
       class="position-relative d-flex align-items-center justify-content-center vh-50 w-100 bg-up"

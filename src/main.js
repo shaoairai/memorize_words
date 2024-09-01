@@ -27,7 +27,8 @@ import {
   faXmark,
   faArrowRight,
   faHouse,
-  faPlay
+  faPlay,
+  faRightFromBracket
 } from '@fortawesome/free-solid-svg-icons' // 所有要嵌入的 icon 都要加在這裡
 
 /* add icons to the library */
@@ -42,7 +43,8 @@ library.add(
   faXmark,
   faArrowRight,
   faHouse,
-  faPlay
+  faPlay,
+  faRightFromBracket
 ) // 所有要嵌入的 icon 都要加在這裡
 
 const app = createApp(App)

@@ -1,7 +1,7 @@
 <script setup>
 import { RouterView, RouterLink } from 'vue-router'
 import router from '@/router'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 import { useFirebaseCrud } from '@/utils/firebaseCrud'
 const { updateData } = useFirebaseCrud()
@@ -168,20 +168,40 @@ onMounted(() => {
     router.push('/login')
   }
 })
+
+// 手機版
+const isMobile = ref(window.innerWidth < 992)
+const containerHeight = ref('100vh')
+
+const updateDimensions = () => {
+  isMobile.value = window.innerWidth < 992
+  containerHeight.value = `${window.innerHeight}px` // 直接設置高度
+}
+
+onMounted(() => {
+  window.addEventListener('resize', updateDimensions)
+  updateDimensions() // 初始化時調用，確保在組件掛載時立即檢查視窗大小
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateDimensions)
+})
 </script>
 
 <template>
   <!-- ToDo List -->
-  <div id="todoListPage" class="bg-warning">
+  <div id="todoListPage" class="bg-warning" :style="{ height: containerHeight }">
     <nav class="d-flex flex-column flex-sm-row">
-      <h2 class="text-center">WordBox 單字盒</h2>
+      <h2 class="text-center">WordBox</h2>
       <ul class="d-flex justify-content-end">
         <li class="me-3">
           <RouterLink to="/">
             <span>{{ name }} 的英文單字列表</span>
           </RouterLink>
         </li>
-        <li @click="logout" style="cursor: pointer">登出</li>
+        <li @click="logout" style="cursor: pointer">
+          <font-awesome-icon icon="fa-solid fa-right-from-bracket" />
+        </li>
       </ul>
     </nav>
 

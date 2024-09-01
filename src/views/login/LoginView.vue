@@ -1,7 +1,7 @@
 <script setup>
 import router from '@/router'
 import axios from 'axios'
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import logo from '@/assets/logo.png'
 
@@ -28,23 +28,42 @@ const submitForm = () => {
     errLogin.value = true
   }
 }
+
+// 手機版
+const isMobile = ref(window.innerWidth < 992)
+const containerHeight = ref('100vh')
+
+const updateDimensions = () => {
+  isMobile.value = window.innerWidth < 992
+  containerHeight.value = `${window.innerHeight}px` // 直接設置高度
+}
+
+onMounted(() => {
+  window.addEventListener('resize', updateDimensions)
+  updateDimensions() // 初始化時調用，確保在組件掛載時立即檢查視窗大小
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateDimensions)
+})
 </script>
 
 <template>
   <div
-    class="bg-warning vh-100 d-flex justify-content-center align-items-center"
+    class="bg-warning d-flex justify-content-center align-items-center"
     style="overflow: auto"
+    :style="{ height: containerHeight }"
   >
-    <div class="container w-50">
+    <div class="container">
       <div>
         <div
           class="bg-white rounded-circle mx-auto p-3 mb-3"
           style="box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.5); max-width: 150px"
         >
-          <img :src="logo" alt="WordBox 單字盒" class="w-100" />
+          <img :src="logo" alt="WordBox" class="w-100" />
         </div>
       </div>
-      <h1 class="text-center mb-3">WordBox 單字盒</h1>
+      <h1 class="text-center mb-3">WordBox</h1>
       <hr class="mb-3" style="width: 80%; margin: auto" />
       <label>請輸入暱稱</label>
       <input type="text" class="form-control" v-model="loginData.name" @keyup.enter="submitForm" />
