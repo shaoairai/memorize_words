@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap');
+
 html,
 body,
 div,
@@ -153,7 +155,7 @@ html {
 }
 
 body {
-  font-family: 'Noto Sans TC';
+  font-family: 'Noto Sans TC', sans-serif;
   margin: 0 auto;
   overflow: hidden;
 }

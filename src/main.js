@@ -21,11 +21,29 @@ import {
   faCircleXmark,
   faHourglassStart,
   faPenToSquare,
-  faCheck
+  faCheck,
+  faEye,
+  faEyeSlash,
+  faXmark,
+  faArrowRight,
+  faHouse,
+  faPlay
 } from '@fortawesome/free-solid-svg-icons' // 所有要嵌入的 icon 都要加在這裡
 
 /* add icons to the library */
-library.add(faPlus, faCircleXmark, faHourglassStart, faPenToSquare, faCheck) // 所有要嵌入的 icon 都要加在這裡
+library.add(
+  faPlus,
+  faCircleXmark,
+  faHourglassStart,
+  faPenToSquare,
+  faCheck,
+  faEye,
+  faEyeSlash,
+  faXmark,
+  faArrowRight,
+  faHouse,
+  faPlay
+) // 所有要嵌入的 icon 都要加在這裡
 
 const app = createApp(App)
 

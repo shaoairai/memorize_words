@@ -1,10 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import LoginView from '@/views/login/LoginView.vue'
-import SigninView from '@/views/login/SigninView.vue'
-import TodoList from '@/views/admin/TodoList.vue'
-import ListAll from '@/views/admin/pages/ListAll.vue'
-import ListUndone from '@/views/admin/pages/ListUndone.vue'
-import ListDone from '@/views/admin/pages/ListDone.vue'
 import WordsList from '@/views/admin/WordsList.vue'
 import QuizMode from '@/views/admin/QuizMode.vue'
 
@@ -13,18 +8,13 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'login',
-      component: LoginView
-    },
-    {
-      path: '/signin',
-      name: 'signin',
-      component: SigninView
-    },
-    {
-      path: '/wordslist',
       name: 'wordslist',
       component: WordsList
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView
     },
     {
       path: '/quizmode',

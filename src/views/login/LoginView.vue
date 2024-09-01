@@ -3,80 +3,64 @@ import router from '@/router'
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import logo from '@/assets/logo.png'
 
 const loginData = ref({
-  email: '',
+  name: '',
   pw: ''
 })
+const errLogin = ref(false)
 
 // 登入
 const submitForm = () => {
-  const data = JSON.stringify({
-    email: loginData.value.email,
-    password: loginData.value.pw
-  })
+  const nameLowerCase = loginData.value.name.toLowerCase()
+  const pwLowerCase = loginData.value.pw.toLowerCase()
 
-  const config = {
-    method: 'POST',
-    url: `${import.meta.env.VITE_APP_BASE_URL}/users/sign_in`,
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    data: data
-  }
-
-  try {
-    axios(config)
-      .then((res) => {
-        // 存 token
-        document.cookie = `token=${res.data.token}; path=/` // 將 token 存入 cookie
-        localStorage.setItem('nickname', res.data.nickname)
-
-        router.push('/todolist')
-      })
-      .catch((err) => {
-        console.log(err.response)
-        alert('登入失敗，請確認帳號密碼是否正確')
-      })
-  } catch {
-    alert('登入失敗，請稍後再試')
+  if (
+    (nameLowerCase === import.meta.env.VITE_APP_NAME1 ||
+      nameLowerCase === import.meta.env.VITE_APP_NAME2) &&
+    pwLowerCase === import.meta.env.VITE_APP_PW
+  ) {
+    localStorage.setItem('memorize_name', loginData.value.name)
+    localStorage.setItem('memorize_pw', loginData.value.pw)
+    router.push('/')
+  } else {
+    errLogin.value = true
   }
 }
-
-// 自動登入
-const autoLogin = () => {
-  const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, '$1')
-
-  const config = {
-    method: 'GET',
-    url: `${import.meta.env.VITE_APP_BASE_URL}/users/checkout`,
-    headers: {
-      Authorization: token
-    }
-  }
-
-  try {
-    axios(config)
-      .then((res) => {
-        router.push('/wordslist')
-      })
-      .catch((err) => {
-        console.log(err.response)
-        console.log('自動登入失敗')
-      })
-  } catch {
-    console.log('自動登入失敗，請稍後再試')
-  }
-}
-
-onMounted(() => {
-  autoLogin()
-})
 </script>
 
 <template>
+  <div
+    class="bg-warning vh-100 d-flex justify-content-center align-items-center"
+    style="overflow: auto"
+  >
+    <div class="container w-50">
+      <div>
+        <div
+          class="bg-white rounded-circle mx-auto p-3 mb-3"
+          style="box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.5); max-width: 150px"
+        >
+          <img :src="logo" alt="WordMate" class="w-100" />
+        </div>
+      </div>
+      <h1 class="text-center mb-3">WordMate</h1>
+      <hr class="mb-3" style="width: 80%; margin: auto" />
+      <label>請輸入暱稱</label>
+      <input type="text" class="form-control" v-model="loginData.name" @keyup.enter="submitForm" />
+      <label class="mt-3">請輸入密碼</label>
+      <input
+        type="password"
+        class="form-control"
+        v-model="loginData.pw"
+        @keyup.enter="submitForm"
+      />
+      <div v-if="errLogin" class="text-danger mt-1 text-end">暱稱或密碼錯誤，請詢問管理員</div>
+      <button type="button" class="btn btn-primary mt-3 w-100" @click="submitForm">登入</button>
+    </div>
+  </div>
   <!-- login_page -->
-  <div id="loginPage" class="bg-yellow">
+  <!-- <div id="loginPage" class="bg-yellow">
     <div class="conatiner loginPage vhContainer">
       <div class="side">
         <a href="#"
@@ -120,5 +104,5 @@ onMounted(() => {
         </form>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
